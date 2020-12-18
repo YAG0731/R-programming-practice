@@ -1,0 +1,81 @@
+---
+title: "Project3"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Download the file ProgAssignment3-data.zip file containing the data for Programming Assignment 3 from
+the Coursera web site. Unzip the file in a directory that will serve as your working directory. When you
+start up R make sure to change your working directory to the directory where you unzipped the data.
+The data for this assignment come from the Hospital Compare web site (http://hospitalcompare.hhs.gov)
+run by the U.S. Department of Health and Human Services. The purpose of the web site is to provide data and
+information about the quality of care at over 4,000 Medicare-certified hospitals in the U.S. This dataset essentially covers all major U.S. hospitals. This dataset is used for a variety of purposes, including determining
+whether hospitals should be fined for not providing high quality care to patients (see http://goo.gl/jAXFX
+for some background on this particular topic).
+The Hospital Compare web site contains a lot of data and we will only look at a small subset for this
+assignment. The zip file for this assignment contains three files
+• outcome-of-care-measures.csv: Contains information about 30-day mortality and readmission rates
+for heart attacks, heart failure, and pneumonia for over 4,000 hospitals.
+• hospital-data.csv: Contains information about each hospital.
+• Hospital_Revised_Flatfiles.pdf: Descriptions of the variables in each file (i.e the code book).
+A description of the variables in each of the files is in the included PDF file named Hospital_Revised_Flatfiles.pdf.
+This document contains information about many other files that are not included with this programming
+assignment. You will want to focus on the variables for Number 19 (“Outcome of Care Measures.csv”) and
+Number 11 (“Hospital Data.csv”). You may find it useful to print out this document (at least the pages for
+Tables 19 and 11) to have next to you while you work on this assignment. In particular, the numbers of
+the variables for each table indicate column indices in each table (i.e. “Hospital Name” is column 2 in the
+outcome-of-care-measures.csv file).
+**1 Plot the 30-day mortality rates for heart attack**
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+outcome[, 11] <- as.numeric(outcome[, 11])
+## You may get a warning about NAs being introduced; that is okay
+hist(outcome[, 11])
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+**Find the best Hospital**
+```{r}
+ source("best.R")
+ best("TX", "heart attack")
+[1] "CYPRESS FAIRBANKS MEDICAL CENTER"
+ best("TX", "heart failure")
+[1] "FORT DUNCAN MEDICAL CENTER"
+ best("MD", "heart attack")
+[1] "JOHNS HOPKINS HOSPITAL, THE"
+ best("MD", "pneumonia")
+[1] "GREATER BALTIMORE MEDICAL CENTER"
+ best("BB", "heart attack")
+Error in best("BB", "heart attack") : invalid state
+ best("NY", "hert attack")
+Error in best("NY", "hert attack") : invalid outcome
+
+```
+
+**3 Ranking hospitals by outcome in a state**
+```{r}
+ source("rankhospital.R")
+ rankhospital("TX", "heart failure", 4)
+[1] "DETAR HOSPITAL NAVARRO"
+ rankhospital("MD", "heart attack", "worst")
+3
+[1] "HARFORD MEMORIAL HOSPITAL"
+ rankhospital("MN", "heart attack", 5000)
+[1] NA
+```
+
+**4 Ranking hospitals in all states**
+```{r}
+> source("rankall.R")
+> head(rankall("heart attack", 20), 10)
+```
+
